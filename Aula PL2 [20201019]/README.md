@@ -1,4 +1,4 @@
-## Link úteis
+## Useful links
 
 :point_right: [What is the HTML DOM?](https://www.w3schools.com/whatis/whatis_htmldom.asp)
 

@@ -1,0 +1,112 @@
+<html>
+<title>Aula PL 3</title>
+<link rel="stylesheet" type="text/css" href="assets/style.css">
+<meta charset="UTF-8">
+
+<body>
+    <h4 id="title"></h4>
+    <div id="list">
+
+    </div>
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    var XML
+    var users = []
+    var myUsers = []
+    $(document).ready(function(){
+        $(this).load("assets/users_xml.xml", function(response){
+            var xmlDoc = $.parseXML(response)
+            XML = $(xmlDoc)
+            users = XML.find("user")
+
+            init()
+        })
+
+          // Adicionar listener do evento keypress e valida se é a tecla ENTER (13)
+          $(this).on('keypress', function(e){
+            if(e.keyCode == 13){
+                init()
+            }
+        })
+
+        // Adicionar listener do evento click para o elemento #title
+        $('#title').on('click', function(){
+            if(confirm('Remover todos os utilizadores?')){
+                users = XML.find('user')
+                myUsers = []
+                $("#list").empty()
+                updateTitle()
+            }
+        })
+    })
+
+    // Pede por um valor a passa esse mesmo para a função addUsersToPage
+    function init(){
+        var number = prompt(`Introduza um número entre 1 e ${users.length}:`)
+
+        if(number != null && parseInt(number)>0 && parseInt(number)<=users.length){
+            addUsersToPage(parseInt(number))
+        }
+    }
+
+    // Recebe um valor como parâmetro que corresponde ao número de elementos a apresentar
+    function addUsersToPage(number){
+        var array = users.splice(0, number)
+        
+        myUsers = myUsers.concat(array)
+
+        for(var user of array){
+            var profile = `<div class="card" id="user-${$(user).find('birthdate').text()}">
+                <img class="userImage" src="https://randomuser.me/api/portraits/${$(user).find('picture').text()}" />
+                <h4 class="userName">${$(user).find('username').text()}</h4>
+                <div class="states">
+                    <ul class="values">
+                        <li>
+                            <span>First name</span>
+                            <span>${$(user).find('first_name').text()}</span>
+                        </li>
+                        <li>
+                            <span>Last name</span>
+                            <span>${$(user).find('last_name').text()}</span>
+                        </li>
+                        <li>
+                            <span>Gender</span>
+                            <span>${$(user).find('gender').text()}</span>
+                        </li>
+                    </ul>
+                </div>
+                <a class="contactBtn" onclick="remove(${$(user).find('birthdate').text()})">Remove</a>
+            </div>`
+
+            $('#list').append(profile)
+        }
+        updateTitle()
+    }
+
+    // Atualiza o #title
+    function updateTitle(){
+        $("#title").text(`Número de utilizadores: ${myUsers.length}`)
+    }
+
+    // Remove um cartão do HTML e volta a adicionar o utilizador ao array original
+    function remove(id){
+        if(confirm('Remover este utilizador?')){
+            $(`#user-${id}`).fadeOut(600, function(){
+                $(this).remove()
+                
+                var index = myUsers.findIndex(function(el){
+                    return $(el).find('birthdate').text() == id
+                })
+                
+                var user = myUsers.splice(index, 1)[0]
+
+                users.push(user)
+
+                updateTitle()
+            })
+        }
+    }
+</script>
+</html>
