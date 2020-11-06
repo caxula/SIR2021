@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <form method="POST" action="api.php">
+        <fieldset>
+            <legend>Info</legend>
+            
+            <label>Username:</label>
+            <input type="text" id="username" autocomplete="off" name="username" placeholder="Inserir username">
+            
+            <br>
+
+            <label>Nome:</label>
+            <input type="text" id="nome" name="nome" placeholder="Insira o nome" value="SIR20">
+
+            <br>
+
+            <label>Password:</label>
+            <input type="password" id="pwd" name="pwd" value="mypassword">
+
+            <br>
+
+            <label>Idade:</label>
+            <input type="number" id="idade" name="idade" step="5" min="0" max="100">
+
+            <br>
+
+            <label>Código postal:</label>
+            <input type="text" id="cp" name="cp" required pattern="\d{4}-[0-9]{3}" title="O formato deve ser 0000-000">
+
+            <br>
+
+            <label>Nacionalidade:</label>
+            <select name="nacionalidade" id="nacionalidade">
+                <optgroup label="Europa">
+                    <option value="PT">Portugal</option>
+                    <option value="ES">Espanha</option>
+                </optgroup>
+                <optgroup label="America">
+                    <option value="USA">USA</option>
+                    <option value="BR">Brasil</option>
+                </optgroup>
+            </select>
+
+            <input type="hidden" name="uuid" value="15">
+        </fieldset>
+
+        <fieldset>
+            <legend>Quem vai ganhar o campeonato?</legend>
+            <label><input type="radio" name="equipa" value="scp">Sporting</label>
+            <label><input type="radio" name="equipa" value="benfica">Benfica</label>
+            <label><input type="radio" name="equipa" value="porto">Porto</label>
+            <label><input type="radio" name="equipa" value="outro">Outro</label>
+        </fieldset>
+
+        <fieldset>
+            <legend>Jogadores preferidos?</legend>
+            <label><input type="checkbox" name="jogadores[]" value="messi">Messi</label>
+            <label><input type="checkbox" name="jogadores[]" value="ronaldo">Ronaldo</label>
+            <label><input type="checkbox" name="jogadores[]" value="marega">Marega</label>
+            <label><input type="checkbox" name="jogadores[]" value="ukra">Ukra</label>
+        </fieldset>
+
+        <fieldset>
+            <legend>Comentário</legend>
+            <textarea name="comentario" id="comentario" cols="50" rows="15"></textarea>
+        </fieldset>
+
+        <input type="submit" value="Submeter">
+        <input type="reset" value="Repor">
+    </form>
+    
+</body>
+</html>
