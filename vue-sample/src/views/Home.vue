@@ -1,18 +1,26 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1>Total of users: {{getUsers.length}}</h1>
+    <ListUsers :Users="getUsers" />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld
+    ListUsers: () => import("@/components/ListUsers")
+  },
+  computed: {
+    getUsers() {
+      return this.$store.getters['users/getAll'].map(user => {
+        return {
+          uuid: user.login.uuid,
+          name: `${user.name.first} ${user.name.last}`
+        }
+      })
+    }
   }
 }
 </script>
